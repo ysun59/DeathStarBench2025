@@ -33,6 +33,7 @@ namespace media_service {
 using std::chrono::milliseconds;
 using std::chrono::duration_cast;
 using std::chrono::system_clock;
+using std::chrono::steady_clock;
 //using namespace jwt::params;
 
 static int64_t current_timestamp = -1;
@@ -40,7 +41,9 @@ static int counter = 0;
 
 static int GetCounter(int64_t timestamp) {
   if (current_timestamp > timestamp) {
-    LOG(fatal) << "Timestamps are not incremental.";
+    LOG(fatal) << "Timestamps are not incremental." <<
+        " Current timestamp: " << current_timestamp <<
+        ", next timestamp: " << timestamp;
     exit(EXIT_FAILURE);
   }
   if (current_timestamp == timestamp) {
@@ -151,7 +154,7 @@ void UserHandler::RegisterUser(
 
   _thread_lock->lock();
   int64_t timestamp = duration_cast<milliseconds>(
-      system_clock::now().time_since_epoch()).count() - CUSTOM_EPOCH;
+      steady_clock::now().time_since_epoch()).count();
   int counter = GetCounter(timestamp);
   _thread_lock->unlock();
 
