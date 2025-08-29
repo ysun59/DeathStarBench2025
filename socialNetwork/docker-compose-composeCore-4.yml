@@ -1,0 +1,401 @@
+version: "3.9"
+services:
+  social-graph-service:
+    image: deathstarbench/social-network-microservices:latest
+    # container name is added by yu-sun
+    container_name: socialnetwork-social-graph-service-1
+    hostname: social-graph-service
+    #    ports:
+    #      - 10000:9090
+    depends_on:
+      jaeger-agent:
+        condition: service_started
+      social-graph-mongodb:
+        condition: service_started
+    restart: always
+    entrypoint: SocialGraphService
+    volumes:
+      - ./config:/social-network-microservices/config
+    cpus: 1
+    cpuset: "4"
+
+  social-graph-mongodb:
+    image: mongo:4.4.6
+    # container name is added by yu-sun
+    container_name: socialnetwork-social-graph-mongodb-1
+    hostname: social-graph-mongodb
+    # ports:
+    #   - 27018:27017
+    restart: always
+    cpus: 1
+    cpuset: "20"
+
+  social-graph-redis:
+    image: redis
+    # container name is added by yu-sun
+    container_name: socialnetwork-social-graph-redis-1
+    hostname: social-graph-redis
+    # ports:
+    #   - 6380:6379
+    restart: always
+    cpus: 1
+    cpuset: "10"
+
+  home-timeline-redis:
+    image: redis
+    # container name is added by yu-sun
+    container_name: socialnetwork-home-timeline-redis-1
+    hostname: home-timeline-redis
+    # ports:
+    #   - 6381:6379
+    restart: always
+    cpus: 4
+    cpuset: "52,54,56,58"
+    # 给多了没用
+
+  compose-post-service:
+    image: deathstarbench/social-network-microservices:latest
+    # container name is added by yu-sun
+    container_name: socialnetwork-compose-post-service-1
+    hostname: compose-post-service
+    #    ports:
+    #      - 10001:9090
+    restart: always
+    depends_on:
+      jaeger-agent:
+        condition: service_started
+    entrypoint: ComposePostService
+    volumes:
+      - ./config:/social-network-microservices/config
+    cpus: 8
+    cpuset: "1,3,5,7,9,11,13,15"
+
+  post-storage-service:
+    image: deathstarbench/social-network-microservices:latest
+    # container name is added by yu-sun
+    container_name: socialnetwork-post-storage-service-1
+    hostname: post-storage-service
+    ports:
+      - 10002:9090
+    restart: always
+    depends_on:
+      jaeger-agent:
+        condition: service_started
+      post-storage-mongodb:
+        condition: service_started
+    entrypoint: PostStorageService
+    volumes:
+      - ./config:/social-network-microservices/config
+    cpus: 1
+    cpuset: "60"
+
+  post-storage-memcached:
+    image: memcached:bookworm
+    # container name is added by yu-sun
+    container_name: socialnetwork-post-storage-memcached-1
+    hostname: post-storage-memcached
+    #    ports:
+    #      - 11212:11211
+    restart: always
+    cpus: 1
+    cpuset: "14"
+
+  post-storage-mongodb:
+    image: mongo:4.4.6
+    # container name is added by yu-sun
+    container_name: socialnetwork-post-storage-mongodb-1
+    hostname: post-storage-mongodb
+    #    ports:
+    #      - 27019:27017
+    restart: always
+    cpus: 1
+    cpuset: "2"
+
+  user-timeline-service:
+    image: deathstarbench/social-network-microservices:latest
+    # container name is added by yu-sun
+    container_name: socialnetwork-user-timeline-service-1
+    hostname: user-timeline-service
+    #    ports:
+    #      - 10003:9090
+    restart: always
+    depends_on:
+      jaeger-agent:
+        condition: service_started
+      user-timeline-mongodb:
+        condition: service_started
+    entrypoint: UserTimelineService
+    volumes:
+      - ./config:/social-network-microservices/config
+    cpus: 2
+    cpuset: "32,34"
+
+  user-timeline-redis:
+    image: redis
+    # container name is added by yu-sun
+    container_name: socialnetwork-user-timeline-redis-1
+    hostname: user-timeline-redis
+    #    ports:
+    #      - 6383:6379
+    restart: always
+    cpus: 1
+    cpuset: "0"
+
+  user-timeline-mongodb:
+    image: mongo:4.4.6
+    # container name is added by yu-sun
+    container_name: socialnetwork-user-timeline-mongodb-1
+    hostname: user-timeline-mongodb
+    #    ports:
+    #      - 27020:27017
+    restart: always
+    cpus: 8
+    cpuset: "17,19,21,23,25,27,29,31"
+
+  url-shorten-service:
+    image: deathstarbench/social-network-microservices:latest
+    # container name is added by yu-sun
+    container_name: socialnetwork-url-shorten-service-1
+    hostname: url-shorten-service
+    #    ports:
+    #      - 10004:9090
+    restart: always
+    entrypoint: UrlShortenService
+    depends_on:
+      jaeger-agent:
+        condition: service_started
+      url-shorten-mongodb:
+        condition: service_started
+    volumes:
+      - ./config:/social-network-microservices/config
+    cpus: 1
+    cpuset: "6"
+
+  url-shorten-memcached:
+    image: memcached:bookworm
+    # container name is added by yu-sun
+    container_name: socialnetwork-url-shorten-memcached-1
+    hostname: url-shorten-memcached
+    #    ports:
+    #      - 11213:11211
+    restart: always
+    cpus: 1
+    cpuset: "16"
+
+  url-shorten-mongodb:
+    image: mongo:4.4.6
+    # container name is added by yu-sun
+    container_name: socialnetwork-url-shorten-mongodb-1
+    hostname: url-shorten-mongodb
+    #    ports:
+    #      - 27021:27017
+    restart: always
+    cpus: 2
+    cpuset: "48,50"
+
+  user-service:
+    image: deathstarbench/social-network-microservices:latest
+    # container name is added by yu-sun
+    container_name: socialnetwork-user-service-1
+    hostname: user-service
+    #    ports:
+    #      - 10005:9090
+    restart: always
+    depends_on:
+      jaeger-agent:
+        condition: service_started
+      user-mongodb:
+        condition: service_started
+    entrypoint: UserService
+    volumes:
+      - ./config:/social-network-microservices/config
+    cpus: 1
+    cpuset: "28"
+
+  user-memcached:
+    image: memcached:bookworm
+    # container name is added by yu-sun
+    container_name: socialnetwork-user-memcached-1
+    hostname: user-memcached
+    #    ports:
+    #      - 11214:11211
+    restart: always
+    cpus: 1
+    cpuset: "8"
+
+  user-mongodb:
+    image: mongo:4.4.6
+    # container name is added by yu-sun
+    container_name: socialnetwork-user-mongodb-1
+    hostname: user-mongodb
+    # ports:
+    #   - 27023:27017
+    restart: always
+    cpus: 1
+    cpuset: "22"
+
+  media-service:
+    image: deathstarbench/social-network-microservices:latest
+    # container name is added by yu-sun
+    container_name: socialnetwork-media-service-1
+    hostname: media-service
+    #    ports:
+    #      - 10006:9090
+    depends_on:
+      jaeger-agent:
+        condition: service_started
+      media-mongodb:
+        condition: service_started
+    restart: always
+    entrypoint: MediaService
+    volumes:
+      - ./config:/social-network-microservices/config
+    cpus: 1
+    cpuset: "12"
+
+  media-memcached:
+    image: memcached:bookworm
+    # container name is added by yu-sun
+    container_name: socialnetwork-media-memcached-1
+    hostname: media-memcached
+    #    ports:
+    #      - 11215:11211
+    restart: always
+    cpus: 1
+    cpuset: "18"
+
+  media-mongodb:
+    image: mongo:4.4.6
+    # container name is added by yu-sun
+    container_name: socialnetwork-media-mongodb-1
+    hostname: media-mongodb
+    #    ports:
+    #      - 27024:27017
+    restart: always
+    cpus: 1
+    cpuset: "24"
+
+  text-service:
+    image: deathstarbench/social-network-microservices:latest
+    # container name is added by yu-sun
+    container_name: socialnetwork-text-service-1
+    hostname: text-service
+    #    ports:
+    #      - 10007:9090
+    restart: always
+    depends_on:
+      jaeger-agent:
+        condition: service_started
+    entrypoint: TextService
+    volumes:
+      - ./config:/social-network-microservices/config
+    cpus: 4
+    cpuset: "33,35,37,39"
+
+  unique-id-service:
+    image: deathstarbench/social-network-microservices:latest
+    # container name is added by yu-sun
+    container_name: socialnetwork-unique-id-service-1
+    hostname: unique-id-service
+    #    ports:
+    #      - 10008:9090
+    restart: always
+    depends_on:
+      jaeger-agent:
+        condition: service_started
+    entrypoint: UniqueIdService
+    volumes:
+      - ./config:/social-network-microservices/config
+    cpus: 1
+    cpuset: "30"
+
+  user-mention-service:
+    image: deathstarbench/social-network-microservices:latest
+    # container name is added by yu-sun
+    container_name: socialnetwork-user-mention-service-1
+    hostname: user-mention-service
+    #    ports:
+    #      - 10009:9090
+    depends_on:
+      jaeger-agent:
+        condition: service_started
+    restart: always
+    entrypoint: UserMentionService
+    volumes:
+      - ./config:/social-network-microservices/config
+    cpus: 2
+    cpuset: "36,38"
+
+  home-timeline-service:
+    image: deathstarbench/social-network-microservices:latest
+    # container name is added by yu-sun
+    container_name: socialnetwork-home-timeline-service-1
+    hostname: home-timeline-service
+    #    ports:
+    #      - 10010:9090
+    depends_on:
+      jaeger-agent:
+        condition: service_started
+    restart: always
+    entrypoint: HomeTimelineService
+    volumes:
+      - ./config:/social-network-microservices/config
+    cpus: 2
+    cpuset: "40,42"
+
+  nginx-thrift:
+    image: yg397/openresty-thrift:xenial
+    # container name is added by yu-sun
+    container_name: socialnetwork-nginx-thrift-1
+    hostname: nginx-thrift
+    ports:
+      - 8080:8080
+    depends_on:
+      jaeger-agent:
+        condition: service_started
+    restart: always
+    volumes:
+      - ./nginx-web-server/lua-scripts:/usr/local/openresty/nginx/lua-scripts
+      - ./nginx-web-server/pages:/usr/local/openresty/nginx/pages
+      - ./nginx-web-server/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - ./nginx-web-server/jaeger-config.json:/usr/local/openresty/nginx/jaeger-config.json
+      - ./gen-lua:/gen-lua
+      - ./docker/openresty-thrift/lua-thrift:/usr/local/openresty/lualib/thrift
+    cpus: 6
+    cpuset: "41,43,45,47,49,51"
+# Read home timelines need to use it
+
+  media-frontend:
+    image: yg397/media-frontend:xenial
+    # container name is added by yu-sun
+    container_name: socialnetwork-media-frontend-1
+    hostname: media-frontend
+    ports:
+      - 8081:8080
+    restart: always
+    depends_on:
+      jaeger-agent:
+        condition: service_started
+    volumes:
+      - ./media-frontend/lua-scripts:/usr/local/openresty/nginx/lua-scripts
+      - ./media-frontend/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+    cpus: 1
+    cpuset: "26"
+
+  jaeger-agent:
+    image: jaegertracing/all-in-one:latest
+    # container name is added by yu-sun
+    container_name: socialnetwork-jaeger-agent-1
+    ports:
+      #      - 5775:5775/udp
+      #      - 6831:6831/udp
+      #      - 6832:6832/udp
+      #      - 5778:5778
+      - 16686:16686
+      #      - 14268:14268
+      #      - 9411:9411
+    restart: always
+    environment:
+      - COLLECTOR_ZIPKIN_HTTP_PORT=9411
+    cpus: 2
+    cpuset: "44,46"

@@ -1,0 +1,389 @@
+version: "3"
+services:
+#   Enables resolving container hostnames from host machine
+  dns-media:
+    image: defreitas/dns-proxy-server
+    # container name is added by yu-sun
+    container_name: mediamicroservices-dns-media-1
+    volumes:
+      - /opt/dns-proxy-server/conf:/app/conf
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/resolv.conf:/etc/resolv.conf
+    cpus: 1
+    cpuset: "11"
+
+  unique-id-service:
+    image: yg397/media-microservices
+    # container name is added by yu-sun
+    container_name: mediamicroservices-unique-id-service-1
+    hostname: unique-id-service
+#    ports:
+#      - 10001:9090
+    restart: always
+    entrypoint: UniqueIdService
+    cpus: 1
+    cpuset: "6"
+
+  movie-id-service:
+    image: yg397/media-microservices
+    # container name is added by yu-sun
+    container_name: mediamicroservices-movie-id-service-1
+    hostname: movie-id-service
+#    ports:
+#      - 10002:9090
+    restart: always
+    entrypoint: MovieIdService
+    cpus: 2
+    cpuset: "17,19"
+
+  movie-id-mongodb:
+    image: mongo:4.4.6
+    # container name is added by yu-sun
+    container_name: mediamicroservices-movie-id-mongodb-1
+    hostname: movie-id-mongodb
+#    ports:
+#      - 27018:27017
+    restart: always
+    cpus: 1
+    cpuset: "38"
+
+  movie-id-memcached:
+    image: memcached:bookworm
+    # container name is added by yu-sun
+    container_name: mediamicroservices-movie-id-memcached-1
+    hostname: movie-id-memcached
+#    ports:
+#      - 11212:11211
+    restart: always
+    cpus: 1
+    cpuset: "26"
+
+  text-service:
+    image: yg397/media-microservices
+    # container name is added by yu-sun
+    container_name: mediamicroservices-text-service-1
+    hostname: text-service
+#    ports:
+#      - 10003:9090
+    restart: always
+    entrypoint: TextService
+    cpus: 1
+    cpuset: "8"
+
+  rating-service:
+    image: yg397/media-microservices
+    # container name is added by yu-sun
+    container_name: mediamicroservices-rating-service-1
+    hostname: rating-service
+#    ports:
+#      - 10004:9090
+    restart: always
+    entrypoint: RatingService
+    cpus: 1
+    cpuset: "10"
+
+  rating-redis:
+    image: redis
+    # container name is added by yu-sun
+    container_name: mediamicroservices-rating-redis-1
+    hostname: rating-redis
+#    ports:
+#      - 6382:6379
+    restart: always
+    cpus: 1
+    cpuset: "20"
+
+  user-service:
+    image: yg397/media-microservices
+    # container name is added by yu-sun
+    container_name: mediamicroservices-user-service-1
+    hostname: user-service
+#    ports:
+#      - 10005:9090
+    restart: always
+    entrypoint: UserService
+    cpus: 1
+    cpuset: "12"
+
+  user-mongodb:
+    image: mongo:4.4.6
+    # container name is added by yu-sun
+    container_name: mediamicroservices-user-mongodb-1
+    hostname: user-mongodb
+#    ports:
+#      - 27019:27017
+    restart: always
+    cpus: 1
+    cpuset: "40"
+
+  user-memcached:
+    image: memcached:bookworm
+    # container name is added by yu-sun
+    container_name: mediamicroservices-user-memcached-1
+    hostname: user-memcached
+#    ports:
+#      - 11213:11211
+    restart: always
+    cpus: 1
+    cpuset: "28"
+
+  compose-review-service:
+    image: yg397/media-microservices
+    # container name is added by yu-sun
+    container_name: mediamicroservices-compose-review-service-1
+    hostname: compose-review-service
+#    ports:
+#      - 10006:9090
+    restart: always
+    entrypoint: ComposeReviewService
+    cpus: 4
+    cpuset: "1,3,5,7"
+
+  compose-review-memcached:
+    image: memcached:bookworm
+    # container name is added by yu-sun
+    container_name: mediamicroservices-compose-review-memcached-1
+    hostname: compose-review-memcached
+#    ports:
+#      - 11214:11211
+    restart: always
+    cpus: 4
+    cpuset: "21,23,25,27"
+
+  review-storage-service:
+    image: yg397/media-microservices
+    # container name is added by yu-sun
+    container_name: mediamicroservices-review-storage-service-1
+    hostname: review-storage-service
+#    ports:
+#      - 10007:9090
+    restart: always
+    entrypoint: ReviewStorageService
+    cpus: 1
+    cpuset: "14"
+
+  review-storage-mongodb:
+    image: mongo:4.4.6
+    # container name is added by yu-sun
+    container_name: mediamicroservices-review-storage-mongodb-1
+    hostname: review-storage-mongodb
+#    ports:
+#      - 27020:27017
+    restart: always
+    cpus: 1
+    cpuset: "0"
+
+  review-storage-memcached:
+    image: memcached:bookworm
+    # container name is added by yu-sun
+    container_name: mediamicroservices-review-storage-memcached-1
+    hostname: review-storage-memcached
+#    ports:
+#      - 11215:11211
+    restart: always
+    cpus: 1
+    cpuset: "30"
+
+  user-review-service:
+    image: yg397/media-microservices
+    # container name is added by yu-sun
+    container_name: mediamicroservices-user-review-service-1
+    hostname: user-review-service
+#    ports:
+#      - 10008:9090
+    restart: always
+    entrypoint: UserReviewService
+    cpus: 1
+    cpuset: "16"
+
+  user-review-mongodb:
+    image: mongo:4.4.6
+    # container name is added by yu-sun
+    container_name: mediamicroservices-user-review-mongodb-1
+    hostname: user-review-mongodb
+#    ports:
+#      - 27021:27017
+    restart: always
+    cpus: 1
+    cpuset: "2"
+
+  user-review-redis:
+    image: redis
+    # container name is added by yu-sun
+    container_name: mediamicroservices-user-review-redis-1
+    hostname: user-review-redis
+#    ports:
+#      - 6381:6379
+    restart: always
+    cpus: 1
+    cpuset: "24"
+
+  movie-review-service:
+    image: yg397/media-microservices
+    # container name is added by yu-sun
+    container_name: mediamicroservices-movie-review-service-1
+    hostname: movie-review-service
+#    ports:
+#      - 10009:9090
+    restart: always
+    entrypoint: MovieReviewService
+    cpus: 1
+    cpuset: "18"
+
+  movie-review-mongodb:
+    image: mongo:4.4.6
+    # container name is added by yu-sun
+    container_name: mediamicroservices-movie-review-mongodb-1
+    hostname: movie-review-mongodb
+    ports:
+      - 27022:27017
+    restart: always
+    cpus: 1
+    cpuset: "4"
+
+  movie-review-redis:
+    image: redis
+    # container name is added by yu-sun
+    container_name: mediamicroservices-movie-review-redis-1
+    hostname: movie-review-redis
+#    ports:
+#      - 6380:6379
+    restart: always
+    cpus: 1
+    cpuset: "22"
+
+  nginx-web-server:
+    image: yg397/openresty-thrift:xenial
+    # container name is added by yu-sun
+    container_name: mediamicroservices-nginx-web-server-1
+    hostname: nginx-thrift
+    ports:
+      - 8080:8080
+    restart: always
+    volumes:
+      - ./nginx-web-server/lua-scripts:/usr/local/openresty/nginx/lua-scripts
+      - ./nginx-web-server/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - ./nginx-web-server/jaeger-config.json:/usr/local/openresty/nginx/jaeger-config.json
+      - ./gen-lua:/gen-lua
+    cpus: 1
+    cpuset: "54"
+
+  cast-info-service:
+    image: yg397/media-microservices
+    # container name is added by yu-sun
+    container_name: mediamicroservices-cast-info-service-1
+    hostname: cast-info-service
+#    ports:
+#      - 10010:9090
+    restart: always
+    entrypoint: CastInfoService
+    cpus: 1
+    cpuset: "48"
+
+  cast-info-mongodb:
+    image: mongo:4.4.6
+    # container name is added by yu-sun
+    container_name: mediamicroservices-cast-info-mongodb-1
+    hostname: cast-info-mongodb
+#    ports:
+#      - 27024:27017
+    restart: always
+    cpus: 1
+    cpuset: "42"
+
+  cast-info-memcached:
+    image: memcached:bookworm
+    # container name is added by yu-sun
+    container_name: mediamicroservices-cast-info-memcached-1
+    hostname: cast-info-memcached
+#    ports:
+#      - 11219:11211
+    restart: always
+    cpus: 1
+    cpuset: "32"
+
+  plot-service:
+    image: yg397/media-microservices
+    # container name is added by yu-sun
+    container_name: mediamicroservices-plot-service-1
+    hostname: plot-service
+#    ports:
+#      - 10011:9090
+    restart: always
+    entrypoint: PlotService
+    cpus: 1
+    cpuset: "50"
+
+  plot-mongodb:
+    image: mongo:4.4.6
+    # container name is added by yu-sun
+    container_name: mediamicroservices-plot-mongodb-1
+    hostname: plot-mongodb
+#    ports:
+#      - 27025:27017
+    restart: always
+    cpus: 1
+    cpuset: "44"
+
+  plot-memcached:
+    image: memcached:bookworm
+    # container name is added by yu-sun
+    container_name: mediamicroservices-plot-memcached-1
+    hostname: plot-memcached
+#    ports:
+#      - 11220:11211
+    restart: always
+    cpus: 1
+    cpuset: "34"
+
+  movie-info-service:
+    image: yg397/media-microservices
+    # container name is added by yu-sun
+    container_name: mediamicroservices-movie-info-service-1
+    hostname: movie-info-service
+#    ports:
+#      - 10012:9090
+    restart: always
+    entrypoint: MovieInfoService
+    cpus: 1
+    cpuset: "52"
+
+  movie-info-mongodb:
+    image: mongo:4.4.6
+    # container name is added by yu-sun
+    container_name: mediamicroservices-movie-info-mongodb-1
+    hostname: movie-info-mongodb
+#    ports:
+#      - 27026:27017
+    restart: always
+    cpus: 1
+    cpuset: "46"
+
+  movie-info-memcached:
+    image: memcached:bookworm
+    # container name is added by yu-sun
+    container_name: mediamicroservices-movie-info-memcached-1
+    hostname: movie-info-memcached
+#    ports:
+#      - 11221:11211
+    restart: always
+    cpus: 1
+    cpuset: "36"
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    # container name is added by yu-sun
+    container_name: mediamicroservices-jaeger-1 
+    hostname: jaeger
+    ports:
+#      - 5775:5775/udp
+#      - 6831:6831/udp
+#      - 6832:6832/udp
+#      - 5778:5778
+      - 16686:16686
+#      - 14268:14268
+#      - 9411:9411
+    environment:
+      - COLLECTOR_ZIPKIN_HTTP_PORT=9411
+    cpus: 2
+    cpuset: "13,15"
