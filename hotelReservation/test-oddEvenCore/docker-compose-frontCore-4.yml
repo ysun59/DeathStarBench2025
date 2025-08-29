@@ -1,0 +1,486 @@
+version: "3.8"
+
+services:
+  consul:
+    image: hashicorp/consul:latest
+    # container name of consul is added by yu-sun
+    container_name: hotelreservation-consul-1
+    ports:
+      - "8300:8300"
+      - "8400:8400"
+      - "8500:8500"
+      - "8600:53/udp"
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 1
+    cpuset: "0"
+
+  frontend:
+    configs:
+      - source: server_config
+        target: /config.json
+    environment:
+      - TLS
+      - GC
+      - JAEGER_SAMPLE_RATIO
+      - LOG_LEVEL
+    build: .
+    image: deathstarbench/hotel-reservation:latest
+    # container name is added by yu-sun
+    container_name: hotelreservation-frontend-1
+    entrypoint: frontend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - consul
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 4
+    cpuset: "13,15,17,19"
+
+  profile:
+    configs:
+      - source: server_config
+        target: /config.json
+    environment:
+      - TLS
+      - GC
+      - JAEGER_SAMPLE_RATIO
+      - LOG_LEVEL
+    build: .
+    image: deathstarbench/hotel-reservation:latest
+    # container name is added by yu-sun
+    container_name: hotelreservation-profile-1
+    entrypoint: profile
+    depends_on:
+      - mongodb-profile
+      - memcached-profile
+      - consul
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 2
+    cpuset: "1,3"
+
+  search:
+    configs:
+      - source: server_config
+        target: /config.json
+    environment:
+      - TLS
+      - GC
+      - JAEGER_SAMPLE_RATIO
+      - LOG_LEVEL
+    build: .
+    image: deathstarbench/hotel-reservation:latest
+    # container name is added by yu-sun
+    container_name: hotelreservation-search-1
+    entrypoint: search
+    depends_on:
+      - consul
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 2
+    cpuset: "5,7"
+
+  geo:
+    configs:
+      - source: server_config
+        target: /config.json
+    environment:
+      - TLS
+      - GC
+      - JAEGER_SAMPLE_RATIO
+      - LOG_LEVEL
+    build: .
+    image: deathstarbench/hotel-reservation:latest
+    # container name is added by yu-sun
+    container_name: hotelreservation-geo-1
+    entrypoint: geo
+    depends_on:
+      - mongodb-geo
+      - consul
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 1
+    cpuset: "2"
+
+  rate:
+    configs:
+      - source: server_config
+        target: /config.json
+    environment:
+      - TLS
+      - GC
+      - JAEGER_SAMPLE_RATIO
+      - LOG_LEVEL
+    build: .
+    image: deathstarbench/hotel-reservation:latest
+    # container name is added by yu-sun
+    container_name: hotelreservation-rate-1
+    entrypoint: rate
+    depends_on:
+      - mongodb-rate
+      - memcached-rate
+      - consul
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 6
+    cpuset: "21,23,25,27,29,31"
+
+  review:
+    environment:
+      - TLS
+      - GC
+      - JAEGER_SAMPLE_RATIO
+      - MEMC_TIMEOUT
+      - LOG_LEVEL
+    build: .
+    image: hotel_reserv_review_single_node
+    entrypoint: review
+    container_name: 'hotel_reserv_review'
+    depends_on:
+      - mongodb-review
+      - memcached-review
+      - consul
+    restart: always
+    cpus: 1
+    cpuset: "26"
+  
+  attractions:
+    environment:
+      - TLS
+      - GC
+      - JAEGER_SAMPLE_RATIO
+      - MEMC_TIMEOUT
+      - LOG_LEVEL
+    build: .
+    image: hotel_reserv_attractions_single_node
+    entrypoint: attractions
+    container_name: 'hotel_reserv_attractions'
+    depends_on:
+      - mongodb-attractions
+      - consul
+    restart: always
+    cpus: 1
+    cpuset: "28"
+
+  recommendation:
+    configs:
+      - source: server_config
+        target: /config.json
+    environment:
+      - TLS
+      - GC
+      - JAEGER_SAMPLE_RATIO
+      - LOG_LEVEL
+    build: .
+    image: deathstarbench/hotel-reservation:latest
+    # container name is added by yu-sun
+    container_name: hotelreservation-recommendation-1
+    entrypoint: recommendation
+    depends_on:
+      - mongodb-recommendation
+      - consul
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 1
+    cpuset: "4"
+
+  user:
+    configs:
+      - source: server_config
+        target: /config.json
+    environment:
+      - TLS
+      - GC
+      - JAEGER_SAMPLE_RATIO
+      - LOG_LEVEL
+    build: .
+    image: deathstarbench/hotel-reservation:latest
+    # container name is added by yu-sun
+    container_name: hotelreservation-user-1
+    entrypoint: user
+    depends_on:
+      - mongodb-user
+      - consul
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 1
+    cpuset: "6"
+
+  reservation:
+    configs:
+      - source: server_config
+        target: /config.json
+    environment:
+      - TLS
+      - GC
+      - JAEGER_SAMPLE_RATIO
+      - LOG_LEVEL
+    build: .
+    image: deathstarbench/hotel-reservation:latest
+    # container name is added by yu-sun
+    container_name: hotelreservation-reservation-1
+    entrypoint: reservation
+    depends_on:
+      - mongodb-reservation
+      - memcached-reserve
+      - consul
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 18
+    cpuset: "35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52"
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    # container name is added by yu-sun
+    container_name: hotelreservation-jaeger-1
+    ports:
+      - "14269"
+      - "5778:5778"
+      - "14268:14268"
+      - "14267"
+      - "16686:16686"
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 1
+    cpuset: "8"
+
+  memcached-rate:
+    image: memcached:bookworm
+    # container name is added by yu-sun
+    container_name: hotelreservation-memcached-rate-1
+    hostname: user-memcached
+    environment:
+      - MEMCACHED_CACHE_SIZE=128
+      - MEMCACHED_THREADS=2
+    logging:
+      options:
+        max-size: 50m
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 1
+    cpuset: "10"
+
+  memcached-review:
+    image: memcached:bookworm
+    # hostname: user-memcached
+    container_name: 'hotel_reserv_review_mmc'
+    restart: always
+    environment:
+      - MEMCACHED_CACHE_SIZE=128
+      - MEMCACHED_THREADS=2
+    logging:
+      options:
+        max-size: 50m
+    cpus: 1
+    cpuset: "30"
+
+  memcached-profile:
+    image: memcached:bookworm
+    # container name is added by yu-sun
+    container_name: 'hotelreservation-memcached-profile-1'
+    hostname: user-memcached
+    environment:
+      - MEMCACHED_CACHE_SIZE=128
+      - MEMCACHED_THREADS=2
+    logging:
+      options:
+        max-size: 50m
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 1
+    cpuset: "12"
+
+  memcached-reserve:
+    image: memcached:bookworm
+    # container name is added by yu-sun
+    container_name: 'hotelreservation-memcached-reserve-1'
+    hostname: user-memcached
+    environment:
+      - MEMCACHED_CACHE_SIZE=128
+      - MEMCACHED_THREADS=2
+    logging:
+      options:
+        max-size: 50m
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 2
+    cpuset: "9,11"
+
+  mongodb-geo:
+    image: mongo:5.0
+    # container name is added by yu-sun
+    container_name: 'hotelreservation-mongodb-geo-1'
+    hostname: geo-db
+    volumes:
+      - geo:/data/db
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 1
+    cpuset: "14"
+
+  mongodb-profile:
+    image: mongo:5.0
+    # container name is added by yu-sun
+    container_name: 'hotelreservation-mongodb-profile-1'
+    hostname: profile-db
+    volumes:
+      - profile:/data/db
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 1
+    cpuset: "16"
+
+  mongodb-rate:
+    image: mongo:5.0
+    # container name is added by yu-sun
+    container_name: 'hotelreservation-mongodb-rate-1'
+    hostname: rate-db
+    volumes:
+      - rate:/data/db
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 1
+    cpuset: "18"
+
+  mongodb-review:
+    image: mongo:5.0
+    # container name is added by yu-sun
+    container_name: 'hotelreservation-mongodb-review-1'
+    hostname: review-db
+    volumes:
+      - review:/data/db
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 1
+    cpuset: "32"
+
+  mongodb-attractions:
+    image: mongo:5.0
+    # container name is added by yu-sun
+    container_name: 'hotelreservation-mongodb-attractions-1'
+    hostname: attractions-db
+    volumes:
+      - attractions:/data/db
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 1
+    cpuset: "34"
+
+  mongodb-recommendation:
+    image: mongo:5.0
+    # container name is added by yu-sun
+    container_name: 'hotelreservation-mongodb-recommendation-1'
+    hostname: recommendation-db
+    volumes:
+      - recommendation:/data/db
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 1
+    cpuset: "20"
+
+  mongodb-reservation:
+    image: mongo:5.0
+    # container name is added by yu-sun
+    container_name: 'hotelreservation-mongodb-reservation-1'
+    hostname: reservation-db
+    volumes:
+      - reservation:/data/db
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 1
+    cpuset: "24"
+    # cpuset: "9,11,13,15"
+
+  mongodb-user:
+    image: mongo:5.0
+    # container name is added by yu-sun
+    container_name: 'hotelreservation-mongodb-user-1'
+    hostname: user-db
+    volumes:
+      - user:/data/db
+    restart: always
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    cpus: 1
+    cpuset: "22"
+
+volumes:
+  geo:
+  profile:
+  rate:
+  recommendation:
+  reservation:
+  user:
+  review:
+  attractions:
+
+configs:
+  server_config:
+    file: ./config.json
