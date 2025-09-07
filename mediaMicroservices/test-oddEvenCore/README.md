@@ -18,11 +18,11 @@ If it is container, the container mediamicroservices-dns-media-1 set to core 11
 * mediamicroservices-movie-review-mongodb \ -—-—----------------—---- core 4
 * mediamicroservices-unique-id-service \ -—-—------------------------ core 6
 * mediamicroservices-text-service \ -—-—----------------—------------ core 8
-* mediamicroservices-rating-service \ -—-—----------------—---------- core 10
+* mediamicroservices-rating-service \ -—-—----------------—---------- core 10()
 * mediamicroservices-user-service \ -—-—----------------—------------ core 12
 * mediamicroservices-review-storage-service \ -—-—------------------- core 14
-* mediamicroservices-user-review-service \ -—-—---------------------- core 16
-* mediamicroservices-movie-review-service \ -—-—--------------------- core 18
+* mediamicroservices-user-review-service \ -—-—---------------------- core 16()
+* mediamicroservices-movie-review-service \ -—-—--------------------- core 18()
 
 * mediamicroservices-rating-redis \ -—-—----------------—------------ core 20
 * mediamicroservices-movie-review-redis \ -—-—----------------—------ core 22
@@ -43,9 +43,24 @@ If it is container, the container mediamicroservices-dns-media-1 set to core 11
 * mediamicroservices-plot-service  -—-—----------------—------------- core 50
 * mediamicroservices-movie-info-service  -—-—------------------------ core 52
 
-* mediamicroservices-nginx-web-server \ -—-—------—------------------ core 54(没法给多，会崩溃,/core给24， 26能跑28秒左右)
+* mediamicroservices-nginx-web-server \ -—-—------—------------------ core 54()(没法给多，会崩溃,/core给24， 26能跑28秒左右)
 
-* mediamicroservices-jaeger \ -—-—----------------—------------------ core 13,15（R-800隔一段时间会很多，改成2个了，其实R小的话，不用那么多）
+* mediamicroservices-jaeger \ -—-—----------------—------------------ core 13（R-800隔一段时间会很多，改成2个了，其实R小的话，不用那么多）
+* mediamicroservices-movie-id-service \ -—-—------------------------- core 17,19
+
+* mediamicroservices-compose-review-memcached \ -—-—---------—------- core 21,23
+* mediamicroservices-compose-review-service \ -—-—------------------- core 1,3,5,7
+
+* container mediamicroservices-dns-media-1 -—-—---------------------- core 11
+
+
+core 26,28,30, 9,11，是空的,container多一个dns-media-1占core 11
+
+## There is little different from set cores
+- Container has 33 vms(container mediamicroservices-dns-media-1), firecracker has 32 vms
+
+
+---- core 13,15（R-800隔一段时间会很多，改成2个了，其实R小的话，不用那么多）
 * mediamicroservices-movie-id-service \ -—-—------------------------- core 17,19
 
 * mediamicroservices-compose-review-memcached \ -—-—---------—------- core 21,23,25,27
@@ -54,6 +69,3 @@ If it is container, the container mediamicroservices-dns-media-1 set to core 11
 * container mediamicroservices-dns-media-1 -—-—---------------------- core 11
 
 core 26,28,30, 9,11，是空的,container多一个dns-media-1占core 11
-
-## There is little different from set cores
-- Container has 33 vms(container mediamicroservices-dns-media-1), firecracker has 32 vms

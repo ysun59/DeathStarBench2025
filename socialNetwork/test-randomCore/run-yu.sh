@@ -29,7 +29,7 @@ WRK=$!
 #sleep 1.  #warmup
 mpstat -P ALL 1 > "/home/yu/Res/${DEST}/cpu_perf.txt" &
 iostat -x -k 1 > "/home/yu/Res/${DEST}/perf.txt" &
-./test-randomCore/runPerf.sh $DEST &
+# ./test-randomCore/runPerf.sh $DEST &
 ./test-randomCore/runSchedstat.sh $DEST &
 ./test-randomCore/runSchedDebug.sh $DEST &
 ./test-randomCore/runInterrupts.sh $DEST &
@@ -38,44 +38,44 @@ killall iostat mpstat
 cat "/home/yu/Res/${DEST}/wrk.txt"
 
 # echo "===================================="
-# Read home timelines25000 2+8 2100, 1+8 1000, 1+6 1500
-# socialnetwork-post-storage-service-1
-# socialnetwork-nginx-thrift-1
-sleep 30
-echo "wrk's current affinity list: 61, 63"
-taskset -c 61,63 ../wrk2/wrk -D exp -t 20 -c 60 -d 60 --timeout 5 -L -s ./wrk2/scripts/social-network/read-home-timeline.lua http://localhost:8080/wrk2-api/home-timeline/read -R $1 > "/home/yu/Res/${DEST2}/wrk.txt" &
+# # Read home timelines25000 2+8 2100, 1+8 1000, 1+6 1500
+# # socialnetwork-post-storage-service-1
+# # socialnetwork-nginx-thrift-1
+# sleep 30
+# echo "wrk's current affinity list: 61, 63"
+# taskset -c 61,63 ../wrk2/wrk -D exp -t 20 -c 60 -d 60 --timeout 5 -L -s ./wrk2/scripts/social-network/read-home-timeline.lua http://localhost:8080/wrk2-api/home-timeline/read -R $1 > "/home/yu/Res/${DEST2}/wrk.txt" &
 
-WRK=$!
-#sleep 1.  #warmup
-mpstat -P ALL 1 > "/home/yu/Res/${DEST2}/cpu_perf.txt" &
-iostat -x -k 1 > "/home/yu/Res/${DEST2}/perf.txt" &
-./test-randomCore/runPerf.sh $DEST2 &
-./test-randomCore/runSchedstat.sh $DEST2 &
-./test-randomCore/runSchedDebug.sh $DEST2 &
-./test-randomCore/runInterrupts.sh $DEST2 &
-wait $WRK
-killall iostat mpstat
-cat "/home/yu/Res/${DEST2}/wrk.txt"
+# WRK=$!
+# #sleep 1.  #warmup
+# mpstat -P ALL 1 > "/home/yu/Res/${DEST2}/cpu_perf.txt" &
+# iostat -x -k 1 > "/home/yu/Res/${DEST2}/perf.txt" &
+# # ./test-randomCore/runPerf.sh $DEST2 &
+# ./test-randomCore/runSchedstat.sh $DEST2 &
+# ./test-randomCore/runSchedDebug.sh $DEST2 &
+# ./test-randomCore/runInterrupts.sh $DEST2 &
+# wait $WRK
+# killall iostat mpstat
+# cat "/home/yu/Res/${DEST2}/wrk.txt"
 
 # echo "===================================="
-# Read user timelines
-# 2+8 1420, 1+8 700, 1+6 700
-sleep 30
+# # Read user timelines
+# # 2+8 1420, 1+8 700, 1+6 700
+# sleep 30
 
-echo "wrk's current affinity list: 61, 63"
-taskset -c 61,63 ../wrk2/wrk -D exp -t 20 -c 60 -d 60 --timeout 5 -L -s ./wrk2/scripts/social-network/read-user-timeline.lua http://localhost:8080/wrk2-api/user-timeline/read -R $1 > "/home/yu/Res/${DEST3}/wrk.txt" &
+# echo "wrk's current affinity list: 61, 63"
+# taskset -c 61,63 ../wrk2/wrk -D exp -t 20 -c 60 -d 60 --timeout 5 -L -s ./wrk2/scripts/social-network/read-user-timeline.lua http://localhost:8080/wrk2-api/user-timeline/read -R $1 > "/home/yu/Res/${DEST3}/wrk.txt" &
 
-WRK=$!
-#sleep 1.  #warmup
-mpstat -P ALL 1 > "/home/yu/Res/${DEST3}/cpu_perf.txt" &
-iostat -x -k 1 > "/home/yu/Res/${DEST3}/perf.txt" &
-./test-randomCore/runPerf.sh $DEST3 &
-./test-randomCore/runSchedstat.sh $DEST3 &
-./test-randomCore/runSchedDebug.sh $DEST3 &
-./test-randomCore/runInterrupts.sh $DEST3 &
-wait $WRK
-killall iostat mpstat
-cat "/home/yu/Res/${DEST3}/wrk.txt"
+# WRK=$!
+# #sleep 1.  #warmup
+# mpstat -P ALL 1 > "/home/yu/Res/${DEST3}/cpu_perf.txt" &
+# iostat -x -k 1 > "/home/yu/Res/${DEST3}/perf.txt" &
+# # ./test-randomCore/runPerf.sh $DEST3 &
+# ./test-randomCore/runSchedstat.sh $DEST3 &
+# ./test-randomCore/runSchedDebug.sh $DEST3 &
+# ./test-randomCore/runInterrupts.sh $DEST3 &
+# wait $WRK
+# killall iostat mpstat
+# cat "/home/yu/Res/${DEST3}/wrk.txt"
 
 
 

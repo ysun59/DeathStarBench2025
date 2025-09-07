@@ -17,17 +17,26 @@ sleep 20
 sleep 20
 ./run-yu.sh 1200
 sleep 20
-./run-yu.sh 1500
-sleep 20
-./run-yu.sh 1600
-sleep 20
-./run-yu.sh 2000
-sleep 20
-./run-yu.sh 2500
-sleep 20
 
+
+# ./run-yu.sh 1500
+# sleep 20
+# ./run-yu.sh 1600
+# sleep 20
+# ./run-yu.sh 2000
+# sleep 20
+# ./run-yu.sh 2500
+# sleep 20
+
+
+# ./run-yu.sh 3000
+# sleep 20
+# ./run-yu.sh 3500
+# sleep 20
+# ./run-yu.sh 4000
+# sleep 20
 
 
 cp README_YU.md /home/yu/Res/README_YU.md
-# mv /home/yu/Res /home/yu/Res-firecracker-set-latency-v1
-# mv /home/yu/Res /home/yu/Res-firecracker-set-perf-v1
+# mv /home/yu/Res /home/yu/Res-container-random-latency-v1
+# mv /home/yu/Res /home/yu/Res-container-random-perf-v1

@@ -17,7 +17,7 @@ services:
     volumes:
       - ./config:/social-network-microservices/config
     cpus: 1
-    cpuset: "4"
+    cpuset: "2"
 
   social-graph-mongodb:
     image: mongo:4.4.6
@@ -28,7 +28,7 @@ services:
     #   - 27018:27017
     restart: always
     cpus: 1
-    cpuset: "20"
+    cpuset: "16"
 
   social-graph-redis:
     image: redis
@@ -39,7 +39,7 @@ services:
     #   - 6380:6379
     restart: always
     cpus: 1
-    cpuset: "10"
+    cpuset: "6"
 
   home-timeline-redis:
     image: redis
@@ -50,7 +50,7 @@ services:
     #   - 6381:6379
     restart: always
     cpus: 4
-    cpuset: "52,54,56,58"
+    cpuset: "56,58,60,62"
     # 给多了没用
 
   compose-post-service:
@@ -86,8 +86,8 @@ services:
     entrypoint: PostStorageService
     volumes:
       - ./config:/social-network-microservices/config
-    cpus: 1
-    cpuset: "60"
+    cpus: 2
+    cpuset: "41,43"
 
   post-storage-memcached:
     image: memcached:bookworm
@@ -98,7 +98,7 @@ services:
     #      - 11212:11211
     restart: always
     cpus: 1
-    cpuset: "14"
+    cpuset: "10"
 
   post-storage-mongodb:
     image: mongo:4.4.6
@@ -108,8 +108,8 @@ services:
     #    ports:
     #      - 27019:27017
     restart: always
-    cpus: 1
-    cpuset: "2"
+    cpus: 2
+    cpuset: "52,54"
 
   user-timeline-service:
     image: deathstarbench/social-network-microservices:latest
@@ -169,7 +169,7 @@ services:
     volumes:
       - ./config:/social-network-microservices/config
     cpus: 1
-    cpuset: "6"
+    cpuset: "28"
 
   url-shorten-memcached:
     image: memcached:bookworm
@@ -180,7 +180,7 @@ services:
     #      - 11213:11211
     restart: always
     cpus: 1
-    cpuset: "16"
+    cpuset: "12"
 
   url-shorten-mongodb:
     image: mongo:4.4.6
@@ -210,7 +210,7 @@ services:
     volumes:
       - ./config:/social-network-microservices/config
     cpus: 1
-    cpuset: "28"
+    cpuset: "24"
 
   user-memcached:
     image: memcached:bookworm
@@ -221,7 +221,7 @@ services:
     #      - 11214:11211
     restart: always
     cpus: 1
-    cpuset: "8"
+    cpuset: "4"
 
   user-mongodb:
     image: mongo:4.4.6
@@ -232,7 +232,7 @@ services:
     #   - 27023:27017
     restart: always
     cpus: 1
-    cpuset: "22"
+    cpuset: "18"
 
   media-service:
     image: deathstarbench/social-network-microservices:latest
@@ -251,7 +251,7 @@ services:
     volumes:
       - ./config:/social-network-microservices/config
     cpus: 1
-    cpuset: "12"
+    cpuset: "8"
 
   media-memcached:
     image: memcached:bookworm
@@ -262,7 +262,7 @@ services:
     #      - 11215:11211
     restart: always
     cpus: 1
-    cpuset: "18"
+    cpuset: "14"
 
   media-mongodb:
     image: mongo:4.4.6
@@ -273,7 +273,7 @@ services:
     #      - 27024:27017
     restart: always
     cpus: 1
-    cpuset: "24"
+    cpuset: "20"
 
   text-service:
     image: deathstarbench/social-network-microservices:latest
@@ -307,7 +307,7 @@ services:
     volumes:
       - ./config:/social-network-microservices/config
     cpus: 1
-    cpuset: "30"
+    cpuset: "26"
 
   user-mention-service:
     image: deathstarbench/social-network-microservices:latest
@@ -361,8 +361,8 @@ services:
       - ./nginx-web-server/jaeger-config.json:/usr/local/openresty/nginx/jaeger-config.json
       - ./gen-lua:/gen-lua
       - ./docker/openresty-thrift/lua-thrift:/usr/local/openresty/lualib/thrift
-    cpus: 6
-    cpuset: "41,43,45,47,49,51"
+    cpus: 8
+    cpuset: "45,47,49,51,53,55,57,59"
 # Read home timelines need to use it
 
   media-frontend:
@@ -380,7 +380,7 @@ services:
       - ./media-frontend/lua-scripts:/usr/local/openresty/nginx/lua-scripts
       - ./media-frontend/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
     cpus: 1
-    cpuset: "26"
+    cpuset: "22"
 
   jaeger-agent:
     image: jaegertracing/all-in-one:latest

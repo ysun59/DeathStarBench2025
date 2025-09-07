@@ -12,7 +12,7 @@ python3 scripts/write_movie_info.py -c datasets/tmdb/casts.json -m datasets/tmdb
 echo "===================================="
 sleep 5
 
-../wrk2/wrk -D exp -t 4 -c 6 -d 20  --timeout 5 -L -s ./wrk2/scripts/media-microservices/compose-review.lua http://localhost:8080/wrk2-api/review/compose -R 200
+taskset -c 61,63 ../wrk2/wrk -D exp -t 20 -c 60 -d 60 --timeout 5 -L -s ./wrk2/scripts/media-microservices/compose-review.lua http://localhost:8080/wrk2-api/review/compose -R 3000
 
 
 echo "===================================="
@@ -36,5 +36,4 @@ sudo docker compose -f docker-compose-composeCore-4.yml down --volumes
 # cp docker-compose.yml.bk docker-compose.yml
 
 
-sync
-echo 3 > /proc/sys/vm/drop_caches
+sudo sh -c 'sync; echo 3 > /proc/sys/vm/drop_caches'
