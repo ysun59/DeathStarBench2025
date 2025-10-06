@@ -17,7 +17,7 @@ services:
     volumes:
       - ./config:/social-network-microservices/config
     cpus: 1
-    # cpuset: "2"
+    cpuset: "1"
 
   social-graph-mongodb:
     image: mongo:4.4.6
@@ -28,7 +28,7 @@ services:
     #   - 27018:27017
     restart: always
     cpus: 1
-    # cpuset: "16"
+    cpuset: "8"
 
   social-graph-redis:
     image: redis
@@ -39,7 +39,7 @@ services:
     #   - 6380:6379
     restart: always
     cpus: 1
-    # cpuset: "6"
+    cpuset: "3"
 
   home-timeline-redis:
     image: redis
@@ -49,8 +49,8 @@ services:
     # ports:
     #   - 6381:6379
     restart: always
-    cpus: 4
-    # cpuset: "56,58,60,62"
+    cpus: 1
+    cpuset: "20"
     # 给多了没用
 
   compose-post-service:
@@ -67,8 +67,8 @@ services:
     entrypoint: ComposePostService
     volumes:
       - ./config:/social-network-microservices/config
-    cpus: 8
-    # cpuset: "1,3,5,7,9,11,13,15"
+    cpus: 1
+    cpuset: "23"
 
   post-storage-service:
     image: deathstarbench/social-network-microservices:latest
@@ -86,8 +86,8 @@ services:
     entrypoint: PostStorageService
     volumes:
       - ./config:/social-network-microservices/config
-    cpus: 2
-    # cpuset: "41,43"
+    cpus: 6
+    cpuset: "26,27,28,29,30,31"
 
   post-storage-memcached:
     image: memcached:bookworm
@@ -98,7 +98,7 @@ services:
     #      - 11212:11211
     restart: always
     cpus: 1
-    # cpuset: "10"
+    cpuset: "5"
 
   post-storage-mongodb:
     image: mongo:4.4.6
@@ -108,8 +108,8 @@ services:
     #    ports:
     #      - 27019:27017
     restart: always
-    cpus: 2
-    # cpuset: "52,54"
+    cpus: 1
+    cpuset: "19"
 
   user-timeline-service:
     image: deathstarbench/social-network-microservices:latest
@@ -127,8 +127,8 @@ services:
     entrypoint: UserTimelineService
     volumes:
       - ./config:/social-network-microservices/config
-    cpus: 2
-    # cpuset: "32,34"
+    cpus: 1
+    cpuset: "15"
 
   user-timeline-redis:
     image: redis
@@ -139,7 +139,7 @@ services:
     #      - 6383:6379
     restart: always
     cpus: 1
-    # cpuset: "0"
+    cpuset: "0"
 
   user-timeline-mongodb:
     image: mongo:4.4.6
@@ -149,8 +149,8 @@ services:
     #    ports:
     #      - 27020:27017
     restart: always
-    cpus: 8
-    # cpuset: "17,19,21,23,25,27,29,31"
+    cpus: 1
+    cpuset: "22"
 
   url-shorten-service:
     image: deathstarbench/social-network-microservices:latest
@@ -169,7 +169,7 @@ services:
     volumes:
       - ./config:/social-network-microservices/config
     cpus: 1
-    # cpuset: "28"
+    cpuset: "14"
 
   url-shorten-memcached:
     image: memcached:bookworm
@@ -180,7 +180,7 @@ services:
     #      - 11213:11211
     restart: always
     cpus: 1
-    # cpuset: "12"
+    cpuset: "6"
 
   url-shorten-mongodb:
     image: mongo:4.4.6
@@ -190,8 +190,8 @@ services:
     #    ports:
     #      - 27021:27017
     restart: always
-    cpus: 2
-    # cpuset: "48,50"
+    cpus: 1
+    cpuset: "18"
 
   user-service:
     image: deathstarbench/social-network-microservices:latest
@@ -210,7 +210,7 @@ services:
     volumes:
       - ./config:/social-network-microservices/config
     cpus: 1
-    # cpuset: "24"
+    cpuset: "12"
 
   user-memcached:
     image: memcached:bookworm
@@ -221,7 +221,7 @@ services:
     #      - 11214:11211
     restart: always
     cpus: 1
-    # cpuset: "4"
+    cpuset: "2"
 
   user-mongodb:
     image: mongo:4.4.6
@@ -232,7 +232,7 @@ services:
     #   - 27023:27017
     restart: always
     cpus: 1
-    # cpuset: "18"
+    cpuset: "9"
 
   media-service:
     image: deathstarbench/social-network-microservices:latest
@@ -251,7 +251,7 @@ services:
     volumes:
       - ./config:/social-network-microservices/config
     cpus: 1
-    # cpuset: "8"
+    cpuset: "4"
 
   media-memcached:
     image: memcached:bookworm
@@ -262,7 +262,7 @@ services:
     #      - 11215:11211
     restart: always
     cpus: 1
-    # cpuset: "14"
+    cpuset: "7"
 
   media-mongodb:
     image: mongo:4.4.6
@@ -273,7 +273,7 @@ services:
     #      - 27024:27017
     restart: always
     cpus: 1
-    # cpuset: "20"
+    cpuset: "10"
 
   text-service:
     image: deathstarbench/social-network-microservices:latest
@@ -289,8 +289,8 @@ services:
     entrypoint: TextService
     volumes:
       - ./config:/social-network-microservices/config
-    cpus: 4
-    # cpuset: "33,35,37,39"
+    cpus: 1
+    cpuset: "21"
 
   unique-id-service:
     image: deathstarbench/social-network-microservices:latest
@@ -307,7 +307,7 @@ services:
     volumes:
       - ./config:/social-network-microservices/config
     cpus: 1
-    # cpuset: "26"
+    cpuset: "13"
 
   user-mention-service:
     image: deathstarbench/social-network-microservices:latest
@@ -323,8 +323,8 @@ services:
     entrypoint: UserMentionService
     volumes:
       - ./config:/social-network-microservices/config
-    cpus: 2
-    # cpuset: "36,38"
+    cpus: 1
+    cpuset: "16"
 
   home-timeline-service:
     image: deathstarbench/social-network-microservices:latest
@@ -341,7 +341,7 @@ services:
     volumes:
       - ./config:/social-network-microservices/config
     cpus: 2
-    # cpuset: "40,42"
+    cpuset: "24,25"
 
   nginx-thrift:
     image: yg397/openresty-thrift:xenial
@@ -361,8 +361,8 @@ services:
       - ./nginx-web-server/jaeger-config.json:/usr/local/openresty/nginx/jaeger-config.json
       - ./gen-lua:/gen-lua
       - ./docker/openresty-thrift/lua-thrift:/usr/local/openresty/lualib/thrift
-    cpus: 8
-    # cpuset: "45,47,49,51,53,55,57,59"
+    cpus: 31
+    cpuset: "32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62"
 # Read home timelines need to use it
 
   media-frontend:
@@ -380,7 +380,7 @@ services:
       - ./media-frontend/lua-scripts:/usr/local/openresty/nginx/lua-scripts
       - ./media-frontend/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
     cpus: 1
-    # cpuset: "22"
+    cpuset: "11"
 
   jaeger-agent:
     image: jaegertracing/all-in-one:latest
@@ -397,5 +397,5 @@ services:
     restart: always
     environment:
       - COLLECTOR_ZIPKIN_HTTP_PORT=9411
-    cpus: 2
-    # cpuset: "44,46"
+    cpus: 1
+    cpuset: "17"

@@ -25,27 +25,14 @@ sleep 20
 sleep 20
 ./run-yu.sh 2500
 sleep 20
-
-
 ./run-yu.sh 3000
 sleep 20
 ./run-yu.sh 3500
 sleep 20
 ./run-yu.sh 4000
 sleep 20
-./run-yu.sh 4500
-sleep 20
-./run-yu.sh 5000
-sleep 20
-./run-yu.sh 5500
-sleep 20
-./run-yu.sh 6000
-sleep 20
-./run-yu.sh 6500
-sleep 20
-./run-yu.sh 7000
 
 
 cp README_YU.md /home/yu/Res/README_YU.md
-# mv /home/yu/Res /home/yu/Res-container-set-latency-v1
-# mv /home/yu/Res /home/yu/Res-container-set-perf-v1
+# mv /home/yu/Res /home/yu/Res-container-random-latency-v1
+# mv /home/yu/Res /home/yu/Res-container-random-perf-v1
