@@ -20,7 +20,7 @@ cd hotelReservation/test-randomCore
 ./run-yu.sh 1000
 # 1000 indicates request/second (RPS)
 ```
-For the exact container-to-core mapping, see[hotelReservation/test-oddEvenCore/README_YU.md](hotelReservation/test-oddEvenCore/README_YU.md)
+For the exact container-to-core mapping, see [hotelReservation/test-oddEvenCore/README_YU.md](hotelReservation/test-oddEvenCore/README_YU.md)
 
 ## mediaMicroservices
 
@@ -37,7 +37,7 @@ cd mediaMicroservices/test-randomCore
 ./run-yu.sh 1000
 # 1000 indicates request/second (RPS)
 ```
-For the exact container-to-core mapping, see[mediaMicroservices/test-oddEvenCore/README_YU.md](mediaMicroservices/test-oddEvenCore/README_YU.md)
+For the exact container-to-core mapping, see [mediaMicroservices/test-oddEvenCore/README_YU.md](mediaMicroservices/test-oddEvenCore/README_YU.md)
 ## socialNetwork
 
 ### Pinned (CPU-set) mode
@@ -72,11 +72,11 @@ cd socialNetwork/test-randomCore
 
 ### Reference: container-to-core mapping
 #### Compose Posts
-See[socialNetwork/test-oddEvenCore/README_YU_1.md](socialNetwork/test-oddEvenCore/README_YU_1.md)
+See [socialNetwork/test-oddEvenCore/README_YU_1.md](socialNetwork/test-oddEvenCore/README_YU_1.md)
 
 #### Read Home Timelines
-See[socialNetwork/test-oddEvenCore/README_YU_2.md](socialNetwork/test-oddEvenCore/README_YU_2.md)
+See [socialNetwork/test-oddEvenCore/README_YU_2.md](socialNetwork/test-oddEvenCore/README_YU_2.md)
 
 
 #### Read User Timelines
-See[socialNetwork/test-oddEvenCore/README_YU_3.md](socialNetwork/test-oddEvenCore/README_YU_3.md)
+See [socialNetwork/test-oddEvenCore/README_YU_3.md](socialNetwork/test-oddEvenCore/README_YU_3.md)
