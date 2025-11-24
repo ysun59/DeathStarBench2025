@@ -55,5 +55,5 @@ sleep 20
 sleep 20
 
 cp README_YU.md /home/yu/Res/README_YU.md
-# mv /home/yu/Res /home/yu/Res-container-random-perf-v1
-# mv /home/yu/Res /home/yu/Res-container-random-latency-v1
+# mv /home/yu/Res /home/yu/Res-boids-random-perf-v1
+# mv /home/yu/Res /home/yu/Res-boids-random-latency-v1

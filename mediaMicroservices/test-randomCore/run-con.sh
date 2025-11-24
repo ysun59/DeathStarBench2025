@@ -33,6 +33,18 @@ sleep 20
 sleep 20
 
 
+
+./run-yu.sh 4500
+sleep 20
+./run-yu.sh 5000
+sleep 20
+./run-yu.sh 5500
+sleep 20
+./run-yu.sh 6000
+sleep 20
+./run-yu.sh 6500
+sleep 20
+
 cp README_YU.md /home/yu/Res/README_YU.md
 # mv /home/yu/Res /home/yu/Res-container-random-latency-v1
 # mv /home/yu/Res /home/yu/Res-container-random-perf-v1

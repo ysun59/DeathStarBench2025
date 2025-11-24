@@ -14,13 +14,15 @@ sudo docker compose -f docker-compose-frontCore-4.yml up -d
 echo "===================================="
 sleep 20
 echo "wrk's current affinity list: 63"
-taskset -c 63 ../wrk2/wrk -D exp -t 20 -c 60 -d 60 --timeout 5 -L -s ./wrk2/scripts/hotel-reservation/mixed-workload_type_1.lua http://192.168.132.31:5000 -R $1 > "/home/yu/Res/${DEST}/wrk.txt" &
+# taskset -c 63 ../wrk2/wrk -D exp -t 20 -c 60 -d 60 --timeout 5 -L -s ./wrk2/scripts/hotel-reservation/mixed-workload_type_1.lua http://192.168.132.31:5000 -R $1 > "/home/yu/Res/${DEST}/wrk.txt" &
+taskset -c 63 ../wrk2/wrk -D exp -t 20 -c 60 -d 60 --timeout 5 -L -s ./wrk2/scripts/hotel-reservation/mixed-workload_type_1.lua http://192.168.128.75:5000 -R $1 > "/home/yu/Res/${DEST}/wrk.txt" &
 
 WRK=$!
 #sleep 1.  #warmup
 mpstat -P ALL 1 > "/home/yu/Res/${DEST}/cpu_perf.txt" &
 iostat -x -k 1 > "/home/yu/Res/${DEST}/perf.txt" &
-# ./test-oddEvenCore/runPerf.sh $DEST &
+# ./test-oddEvenCore/runPerfFlameGraph.sh $DEST &
+./test-oddEvenCore/runPerf.sh $DEST &
 ./test-oddEvenCore/runSchedstat.sh $DEST &
 ./test-oddEvenCore/runSchedDebug.sh $DEST &
 ./test-oddEvenCore/runInterrupts.sh $DEST &

@@ -1,5 +1,5 @@
 #!/bin/bash
-#run-con.sh
+# run-fire.sh
 
 ./run-yu.sh 100
 sleep 20
@@ -19,8 +19,6 @@ sleep 20
 sleep 20
 ./run-yu.sh 1500
 sleep 20
-
-
 ./run-yu.sh 1600
 sleep 20
 ./run-yu.sh 2000
@@ -33,6 +31,9 @@ sleep 20
 sleep 20
 ./run-yu.sh 4000
 sleep 20
+
+
+
 ./run-yu.sh 4500
 sleep 20
 ./run-yu.sh 5000
@@ -43,17 +44,7 @@ sleep 20
 sleep 20
 ./run-yu.sh 6500
 sleep 20
-./run-yu.sh 7000
-sleep 20
-./run-yu.sh 7500
-sleep 20
-./run-yu.sh 8000
-sleep 20
-./run-yu.sh 8500
-sleep 20
-./run-yu.sh 9000
-sleep 20
 
 cp README_YU.md /home/yu/Res/README_YU.md
-# mv /home/yu/Res /home/yu/Res-container-random-perf-v1
-# mv /home/yu/Res /home/yu/Res-container-random-latency-v1
+# mv /home/yu/Res /home/yu/Res-boids-random-latency-v1
+# mv /home/yu/Res /home/yu/Res-boids-random-perf-v1

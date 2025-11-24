@@ -9,8 +9,14 @@ echo "===================================="
 # let 24 containers, each set to different cores, from core 0-32, 34-52
 
 cd ..
-cp test-randomCore/docker-compose-frontCore-4.yml .
+cp test-boids/docker-compose-frontCore-4.yml .
 sudo docker compose -f docker-compose-frontCore-4.yml up -d
+echo "===================================="
+sleep 20
+
+# enable BOIDS
+sudo ../enable-boids-by-compose.py docker-compose-frontCore-4.yml
+
 echo "===================================="
 sleep 20
 echo "wrk's current affinity list: 63"
@@ -21,11 +27,11 @@ WRK=$!
 #sleep 1.  #warmup
 mpstat -P ALL 1 > "/home/yu/Res/${DEST}/cpu_perf.txt" &
 iostat -x -k 1 > "/home/yu/Res/${DEST}/perf.txt" &
-# ./test-randomCore/runPerfFlameGraph.sh $DEST &
-# ./test-randomCore/runPerf.sh $DEST &
-./test-randomCore/runSchedstat.sh $DEST &
-./test-randomCore/runSchedDebug.sh $DEST &
-./test-randomCore/runInterrupts.sh $DEST &
+# ./test-boids/runPerfFlameGraph.sh $DEST &
+# ./test-boids/runPerf.sh $DEST &
+./test-boids/runSchedstat.sh $DEST &
+./test-boids/runSchedDebug.sh $DEST &
+./test-boids/runInterrupts.sh $DEST &
 wait $WRK
 killall iostat mpstat
 
