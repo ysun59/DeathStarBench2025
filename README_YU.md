@@ -1,7 +1,7 @@
 # DeathStarBench
 Here's the **ready-to-use scripts** provided by **Yu**.
 
-The scripts are divided into two categories:
+The scripts are divided into three categories:
 - **cpuset mode** — benchmarks are pinned to specific CPU cores to achieve the **maximum throughput**.
 - **random (cpus) mode** — benchmarks are run with only the `--cpus` option set (no CPU affinity).The number of `--cpus` assigned corresponds to the number of cores used in the **cpuset** configuration.
 - **vBOIDs (cpus) mode** — benchmarks are run with only the `cpu.boids` option enabled (no CPU affinity).The number of `cpu.boids` assigned corresponds to the number of cores used in the **cpuset** configuration. The parameter can be set through the file `/sys/fs/cgroup/system.slice/docker-{id}.scope/cpu.boids`.
