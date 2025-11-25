@@ -20,6 +20,14 @@ cd hotelReservation/test-randomCore
 ./run-yu.sh 1000
 # 1000 indicates request/second (RPS)
 ```
+
+### vBOIDs mode
+```bash
+cd hotelReservation/test-boids
+./run-yu.sh 1000
+# 1000 indicates request/second (RPS)
+```
+
 For the exact container-to-core mapping, see [hotelReservation/test-oddEvenCore/README_YU.md](hotelReservation/test-oddEvenCore/README_YU.md)
 
 ## mediaMicroservices
@@ -37,6 +45,14 @@ cd mediaMicroservices/test-randomCore
 ./run-yu.sh 1000
 # 1000 indicates request/second (RPS)
 ```
+
+### vBOIDs mode
+```bash
+cd mediaMicroservices/test-boids
+./run-yu.sh 1000
+# 1000 indicates request/second (RPS)
+```
+
 For the exact container-to-core mapping, see [mediaMicroservices/test-oddEvenCore/README_YU.md](mediaMicroservices/test-oddEvenCore/README_YU.md)
 ## socialNetwork
 
@@ -66,6 +82,21 @@ cd socialNetwork/test-randomCore
 ./run-yu.sh 1000 2
 
 # Case 3: random (cpus) for Read User Timelines
+./run-yu-3.sh 1000
+# 1000 indicates request/second (RPS)
+```
+
+### vBOIDs mode
+```bash
+cd socialNetwork/test-boids
+
+# Case 1: vBOIDs (cpus) for Compose Posts
+./run-yu.sh 1000 1
+
+# Case 2: vBOIDs (cpus) for Read Home Timelines
+./run-yu.sh 1000 2
+
+# Case 3: vBOIDs (cpus) for Read User Timelines
 ./run-yu-3.sh 1000
 # 1000 indicates request/second (RPS)
 ```
