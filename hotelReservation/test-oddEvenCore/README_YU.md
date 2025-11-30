@@ -32,13 +32,13 @@ stop all MAAS-related services using `sudo snap stop maas maas-test-db`
 * hotelreservation-mongodb-attractions-1 \ -------- core 34
 
 
-* hotelreservation-profile-1 \ ---—---------------- core 1, ~~3~~
-* hotelreservation-search-1 \ --—------------------ core 5, ~~7~~
-* hotelreservation-memcached-reserve-1 \ —---—----- core 9, ~~11~~
+* hotelreservation-profile-1 \ ---—---------------- core 1
+* hotelreservation-search-1 \ --—------------------ core 5
+* hotelreservation-memcached-reserve-1 \ —---—----- core 9
 
-* hotelreservation-frontend-1 \ ------------------- core 13, 15, ~~17, 19~~
-* hotelreservation-rate-1 \ —---------------------- core 21, 23, 25 (3), ~~27, 29, 31(6)~~
-* hotelreservation-reservation-1 \ —--------------- core 35, 36, 37, 38, 39, 40 (6), ~~41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52 (18)~~
+* hotelreservation-frontend-1 \ ------------------- core 13, 15
+* hotelreservation-rate-1 \ —---------------------- core 21, 23, 25 (3)
+* hotelreservation-reservation-1 \ —--------------- core 35, 36, 37, 38, 39, 40 (6)
 
 
 
