@@ -11,21 +11,17 @@ def get_names_and_cpus(file):
     for line in f:
         if("container_name: " in line):
             name = line.split("container_name: ")[1].strip("'").rstrip("\n").rstrip("'")
-            containers[name] = [0,-1]
         if("cpus: " in line):
             cpus = line.split("cpus: ")[1].strip(" ").rstrip()
-            containers[name][0] = cpus
-        if("numa: " in line):
-            numa = line.split("numa: ")[1].strip(" ").rstrip()
-            containers[name][1] = numa
+            containers[name] = cpus
     f.close()
-    #print(containers)
+    print(containers)
 
 def set_boids():
     try:
         result = subprocess.run(["docker", "ps", "--no-trunc"], capture_output=True, text=True, check=True)
 
-        #print(result.stdout)
+        print(result.stdout)
         for line in result.stdout.split("\n"):
             if("PORTS" in line or len(line) < 5):
                 continue
@@ -33,20 +29,11 @@ def set_boids():
             name = row[-1]
             id = row[0]
 
-            try:
-                if(name in containers):
-                    boids = containers[name][0]
-                    numa = containers[name][1]
-                    numastr = ""
-                    print(f"setting {name} --> {id}: boids={boids}{numastr}")
-                    if(numa != -1):
-                        numastr = f", numa={numa}"
-                        with open(f"/sys/fs/cgroup/system.slice/docker-{id}.scope/cpu.boids_numa", "w") as f:
-                            f.write(numa)
-                    with open(f"/sys/fs/cgroup/system.slice/docker-{id}.scope/cpu.boids", "w") as f:
-                        f.write(boids)
-            except Exception as e:
-                print(f"Failed to set boids: {e}")
+            if(name in containers):
+                boids = containers[name]
+                print(f"setting {name} --> {id}: boids={boids}")
+                with open(f"/sys/fs/cgroup/system.slice/docker-{id}.scope/cpu.boids", "w") as f:
+                    f.write(boids)
 
     except subprocess.CalledProcessError as e:
         print(f"Failed to set boids: {e}")

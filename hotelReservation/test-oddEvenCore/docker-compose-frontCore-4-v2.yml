@@ -1,5 +1,5 @@
 version: "3.8"
-
+ 
 services:
   consul:
     image: hashicorp/consul:latest
@@ -17,7 +17,7 @@ services:
         condition: any
     cpus: 1
     cpuset: "0"
-
+ 
   frontend:
     configs:
       - source: server_config
@@ -41,9 +41,9 @@ services:
       replicas: 1
       restart_policy:
         condition: any
-    cpus: 4
-    cpuset: "13,15,17,19"
-
+    cpus: 2
+    cpuset: "13,15"
+ 
   profile:
     configs:
       - source: server_config
@@ -67,9 +67,9 @@ services:
       replicas: 1
       restart_policy:
         condition: any
-    cpus: 2
-    cpuset: "1,3"
-
+    cpus: 1
+    cpuset: "1"
+ 
   search:
     configs:
       - source: server_config
@@ -91,9 +91,9 @@ services:
       replicas: 1
       restart_policy:
         condition: any
-    cpus: 2
-    cpuset: "5,7"
-
+    cpus: 1
+    cpuset: "5"
+ 
   geo:
     configs:
       - source: server_config
@@ -118,7 +118,7 @@ services:
         condition: any
     cpus: 1
     cpuset: "2"
-
+ 
   rate:
     configs:
       - source: server_config
@@ -142,9 +142,9 @@ services:
       replicas: 1
       restart_policy:
         condition: any
-    cpus: 6
-    cpuset: "21,23,25,27,29,31"
-
+    cpus: 3
+    cpuset: "21,23,25"
+ 
   review:
     environment:
       - TLS
@@ -181,7 +181,7 @@ services:
     restart: always
     cpus: 1
     cpuset: "28"
-
+ 
   recommendation:
     configs:
       - source: server_config
@@ -206,7 +206,7 @@ services:
         condition: any
     cpus: 1
     cpuset: "4"
-
+ 
   user:
     configs:
       - source: server_config
@@ -231,7 +231,7 @@ services:
         condition: any
     cpus: 1
     cpuset: "6"
-
+ 
   reservation:
     configs:
       - source: server_config
@@ -255,9 +255,9 @@ services:
       replicas: 1
       restart_policy:
         condition: any
-    cpus: 18
-    cpuset: "35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52"
-
+    cpus: 6
+    cpuset: "35,36,37,38,39,40"
+ 
   jaeger:
     image: jaegertracing/all-in-one:latest
     # container name is added by yu-sun
@@ -278,7 +278,7 @@ services:
         condition: any
     cpus: 1
     cpuset: "8"
-
+ 
   memcached-rate:
     image: memcached:bookworm
     # container name is added by yu-sun
@@ -297,7 +297,7 @@ services:
         condition: any
     cpus: 1
     cpuset: "10"
-
+ 
   memcached-review:
     image: memcached:bookworm
     # hostname: user-memcached
@@ -311,7 +311,7 @@ services:
         max-size: 50m
     cpus: 1
     cpuset: "30"
-
+ 
   memcached-profile:
     image: memcached:bookworm
     # container name is added by yu-sun
@@ -330,7 +330,7 @@ services:
         condition: any
     cpus: 1
     cpuset: "12"
-
+ 
   memcached-reserve:
     image: memcached:bookworm
     # container name is added by yu-sun
@@ -347,9 +347,9 @@ services:
       replicas: 1
       restart_policy:
         condition: any
-    cpus: 2
-    cpuset: "9,11"
-
+    cpus: 1
+    cpuset: "9"
+ 
   mongodb-geo:
     image: mongo:5.0
     # container name is added by yu-sun
@@ -364,7 +364,7 @@ services:
         condition: any
     cpus: 1
     cpuset: "14"
-
+ 
   mongodb-profile:
     image: mongo:5.0
     # container name is added by yu-sun
@@ -379,7 +379,7 @@ services:
         condition: any
     cpus: 1
     cpuset: "16"
-
+ 
   mongodb-rate:
     image: mongo:5.0
     # container name is added by yu-sun
@@ -394,7 +394,7 @@ services:
         condition: any
     cpus: 1
     cpuset: "18"
-
+ 
   mongodb-review:
     image: mongo:5.0
     # container name is added by yu-sun
@@ -409,7 +409,7 @@ services:
         condition: any
     cpus: 1
     cpuset: "32"
-
+ 
   mongodb-attractions:
     image: mongo:5.0
     # container name is added by yu-sun
@@ -424,7 +424,7 @@ services:
         condition: any
     cpus: 1
     cpuset: "34"
-
+ 
   mongodb-recommendation:
     image: mongo:5.0
     # container name is added by yu-sun
@@ -439,7 +439,7 @@ services:
         condition: any
     cpus: 1
     cpuset: "20"
-
+ 
   mongodb-reservation:
     image: mongo:5.0
     # container name is added by yu-sun
@@ -454,8 +454,7 @@ services:
         condition: any
     cpus: 1
     cpuset: "24"
-    # cpuset: "9,11,13,15"
-
+ 
   mongodb-user:
     image: mongo:5.0
     # container name is added by yu-sun
@@ -470,7 +469,7 @@ services:
         condition: any
     cpus: 1
     cpuset: "22"
-
+ 
 volumes:
   geo:
   profile:
@@ -480,7 +479,7 @@ volumes:
   user:
   review:
   attractions:
-
+ 
 configs:
   server_config:
     file: ./config.json

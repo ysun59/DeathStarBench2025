@@ -35,6 +35,7 @@ iostat -x -k 1 > "/home/yu/Res/${DEST}/perf.txt" &
 wait $WRK
 killall iostat mpstat
 
+# (for i in /sys/fs/cgroup/system.slice/docker-*.scope ; do cat ${i}/cpu.boids ; done ) > "boids.txt"
 
 
 
